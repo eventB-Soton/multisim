@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -44,6 +43,8 @@ import org.eventb.emf.core.impl.AbstractExtensionImpl;
 import org.eventb.emf.core.machine.Event;
 import org.eventb.emf.core.machine.Machine;
 
+import com.google.inject.Injector;
+
 import ac.soton.multisim.Component;
 import ac.soton.multisim.ComponentDiagram;
 import ac.soton.multisim.EventBComponent;
@@ -53,9 +54,6 @@ import ac.soton.multisim.Port;
 import ac.soton.multisim.exception.ModelException;
 import ac.soton.multisim.exception.SimulationException;
 import ac.soton.multisim.util.SimulationUtil;
-
-import com.google.inject.Injector;
-
 import de.be4.ltl.core.parser.LtlParseException;
 import de.prob.Main;
 import de.prob.animator.command.ExecuteUntilCommand;
@@ -69,7 +67,6 @@ import de.prob.statespace.State;
 import de.prob.statespace.StateSpace;
 import de.prob.statespace.Trace;
 import de.prob.statespace.Transition;
-import de.prob2.ui.eclipse.VersionController;
 
 /**
  * <!-- begin-user-doc -->
@@ -114,7 +111,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @custom
 	 */
 	private static DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
-	private static Random random = new Random(System.currentTimeMillis());
+	private static Random random = new Random(System.nanoTime());
 	private Set<String> endStepSet = new HashSet<String>();
 	private LTL ltl;
 	private StringBuilder stringBuilder = new StringBuilder();
@@ -579,7 +576,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public void instantiate() throws SimulationException {
-		VersionController.ensureInstalled();
 		
 		// load event-b machine
 		final IEventBRoot machineRoot = SimulationUtil.getMachineRoot(getMachine());
@@ -648,9 +644,8 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		if (isRecordTrace()) {
 			traceFileName = WorkspaceSynchronizer
 					.getFile(machine.eResource()).getLocation()
-					.removeFileExtension().toOSString()
-					+ "_" + getName()
-					+ "_" + dateFormat.format(new java.util.Date()) + ".xml";
+					.removeLastSegments(1).addTrailingSeparator().toOSString()
+					+ getName() + "_" + dateFormat.format(new java.util.Date()) + ".xml";
 			recordStart(fileName, traceFileName);
 		}
 
@@ -659,10 +654,6 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 		// while setting port value
 		for (Port p : getOutputs())
 			p.eSetDeliver(false);
-		
-		// add animation
-		AnimationSelector selector = injector.getInstance(AnimationSelector.class);
-		selector.addNewAnimation(trace);
 	}
 
 	/**
@@ -787,22 +778,26 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	 * @generated NOT
 	 */
 	public void terminate() {
-		trace.getStateSpace().endTransaction();
 		
 		// re-enable notifications
 		for (Port p : getOutputs())
 			p.eSetDeliver(true);
 		
-		// save trace
-		if (isRecordTrace())
-			recordEnd();
-
-//		// show in ProB
-//		Injector injector = Main.getInjector();
-//		AnimationSelector selector = injector.getInstance(AnimationSelector.class);
-//		selector.addNewAnimation(trace);
+		if (trace != null) {
+			trace.getStateSpace().endTransaction();
+			
+			// save trace
+			if (isRecordTrace())
+				recordEnd();
+	
+			// show in ProB
+			Injector injector = Main.getInjector();
+			AnimationSelector selector = injector.getInstance(AnimationSelector.class);
+			selector.addNewAnimation(trace);
+			
+			trace = null;
+		}
 		
-		trace = null;
 		System.gc();
 	}
 
@@ -1136,7 +1131,7 @@ public class EventBComponentImpl extends AbstractExtensionImpl implements EventB
 	private String recordStart(String modelName, String traceFileName) throws SimulationException {
 		try {
 			traceWriter = new BufferedWriter(new FileWriter(traceFileName));
-			traceWriter.append("<trace><model>").append(modelName).append("</model>");
+			traceWriter.append("<trace><model>").append(modelName).append("</model>\n");
 		} catch (IOException e) {
 			throw new SimulationException("Cannot create a trace file", e);
 		}

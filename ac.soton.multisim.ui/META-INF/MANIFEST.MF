@@ -20,6 +20,17 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eventb.emf.persistence;bundle-version="[3.4.0,4.0.0)",
  de.prob2.kernel.bundle;bundle-version="[1.0.0,1.1.0)",
  de.prob2.ui.eclipse;bundle-version="[1.0.0,1.1.0)",
- org.rodinp.core
+ org.rodinp.core,
+ org.eclipse.jface
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
+Export-Package: ac.soton.multisim.ui.actions,
+ ac.soton.multisim.ui.commands,
+ ac.soton.multisim.ui.dialogs,
+ ac.soton.multisim.ui.navigator,
+ ac.soton.multisim.ui.policies,
+ ac.soton.multisim.ui.providers,
+ ac.soton.multisim.ui.tester,
+ ac.soton.multisim.ui.viewers,
+ ac.soton.multisim.ui.wizards.controls,
+ ac.soton.multisim.ui.wizards.pages

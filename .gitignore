@@ -8,3 +8,4 @@ bin/
 
 # Except dependency libs
 !**/lib/*.jar
+*.DS_Store

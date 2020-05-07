@@ -79,5 +79,6 @@
 		<module>../ac.soton.multisim</module>
 		
 		<module>../ac.soton.multisim.test</module>
+		<module>../ac.soton.multisim.updatesite</module>
 	</modules>
 </project>

@@ -241,6 +241,12 @@
                id="ac.soton.multisim.ui.action.setParameters"
                label="&amp;Parameters">
          </action>
+         <action
+               class="ac.soton.multisim.ui.actions.ShowFMUFileAction"
+               icon="icons/gotoobj_tsk.gif"
+               id="ac.soton.multisim.ui.action.ShowInExplorer"
+               label="Show FMU In Explorer">
+         </action>
       </objectContribution>
       <objectContribution
             adaptable="false"
