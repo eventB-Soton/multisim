@@ -76,6 +76,7 @@ public final class DisplayComponentOpenEditPolicy extends OpenEditPolicy {
 					});
 					chart.setVisible(true);
 					frame.setVisible(true);
+					frame.setAlwaysOnTop(true);
 				}
 			}
 		};

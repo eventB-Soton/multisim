@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/ac.soton.multisim.feature_1.0.0.qualifier.jar" id="ac.soton.multisim.feature" version="1.0.0.qualifier">
+      <category name="ac.soton.simulation"/>
+   </feature>
+   <category-def name="ac.soton.simulation" label="Simulation">
+      <description>
+         Plug-ins that enable simulation based verification of Event-B models
+      </description>
+   </category-def>
+</site>

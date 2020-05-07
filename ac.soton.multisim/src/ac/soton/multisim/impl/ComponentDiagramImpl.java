@@ -405,7 +405,7 @@ public class ComponentDiagramImpl extends EventBNamedImpl implements ComponentDi
 			if (c instanceof EventBComponent) {
 				EventBComponent ebc = (EventBComponent) c;
 				if (ebc.isRecordTrace() && ebc.getTraceFileName() != null)
-					sb .append("Trace recorded to '"+ebc.getTraceFileName()+"'\n");
+					sb .append("Trace recorded to:\n\t"+ebc.getTraceFileName()+"\n");
 			}
 		return sb.toString();
 	}

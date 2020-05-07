@@ -7,8 +7,6 @@
  */
 package ac.soton.multisim.ui.commands;
 
-import java.io.File;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -32,7 +30,7 @@ import org.eclipse.ui.services.ISourceProviderService;
 
 import ac.soton.multisim.ComponentDiagram;
 import ac.soton.multisim.diagram.part.ValidateAction;
-import ac.soton.multisim.master.TwoListMaster;
+import ac.soton.multisim.master.Master;
 import ac.soton.multisim.ui.MultisimUIActivator;
 import ac.soton.multisim.ui.dialogs.SimulationSettingsDialog;
 import ac.soton.multisim.ui.providers.SimulationStateSourceProvider;
@@ -74,7 +72,7 @@ public class SimulateCommandHandler extends AbstractHandler {
 		final Job job = new Job(JOB_NAME) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				return TwoListMaster.simulate(diagram, monitor, new File(outputPath));
+				return Master.simulate(diagram, outputPath, monitor);
 			}
 			@Override
 			public boolean belongsTo(Object family) {

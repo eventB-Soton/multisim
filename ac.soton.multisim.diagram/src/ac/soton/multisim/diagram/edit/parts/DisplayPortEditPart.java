@@ -9,11 +9,14 @@ package ac.soton.multisim.diagram.edit.parts;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.ConnectionAnchor;
+import org.eclipse.draw2d.Ellipse;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
+import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
@@ -215,13 +218,26 @@ public class DisplayPortEditPart extends AbstractBorderItemEditPart {
 	 */
 	public class InputPortFigure extends RectangleFigure {
 
+		private IFigure colourFigure;
+
 		/**
 		 * @generated NOT
 		 */
 		public InputPortFigure() {
 			this.setForegroundColor(ColorConstants.gray);
 			this.setBackgroundColor(THIS_BACK);
+			createColourFigure();
 			updateFace();
+		}
+
+		private void createColourFigure() {
+			colourFigure = new Ellipse();
+			colourFigure.setForegroundColor(THIS_BACK);
+			colourFigure.setBackgroundColor(ColorConstants.yellow);
+			colourFigure.setBorder(null);
+			colourFigure.setSize(new Dimension(6,6));
+			colourFigure.setLocation(new Point(2,2));
+			this.add(colourFigure);
 		}
 
 		/*
@@ -231,11 +247,13 @@ public class DisplayPortEditPart extends AbstractBorderItemEditPart {
 			DisplayPort port = (DisplayPort) DisplayPortEditPart.this
 					.resolveSemanticElement();
 			java.awt.Color c = port.getColor();
-			if (c != null)
-				this.setBackgroundColor(new Color(null, c.getRed(), c
+			if (c != null) {
+				colourFigure.setBackgroundColor(new Color(null, c.getRed(), c
 						.getGreen(), c.getBlue()));
-			else
-				this.setBackgroundColor(THIS_BACK);
+				colourFigure.setVisible(true);
+			} else {
+				colourFigure.setVisible(false);
+			}
 		}
 
 	}
@@ -272,6 +290,7 @@ public class DisplayPortEditPart extends AbstractBorderItemEditPart {
 	}
 
 	/* (non-Javadoc)
+	 * @custom
 	 * @see org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart#handleNotificationEvent(org.eclipse.emf.common.notify.Notification)
 	 */
 	@Override

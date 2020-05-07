@@ -28,7 +28,6 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 import ac.soton.multisim.MultisimPackage;
 import ac.soton.multisim.Port;
-import ac.soton.multisim.VariableCausality;
 
 /**
  * This is the item provider adapter for a {@link ac.soton.multisim.Port} object.

@@ -14,11 +14,11 @@
 <unit id="de.prob2.ui.eclipse.feature.feature.group" version="1.0.0.201501121517"/>
 <repository location="http://nightly.cobra.cs.uni-duesseldorf.de/prob2/updates/releases/advance-final/"/>
 </location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.pde.feature.group" version="3.10.1.v20150204-1700"/>
 <repository location="http://download.eclipse.org/releases/luna"/>
 </location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.equinox.sdk.feature.group" version="3.10.2.v20150204-1316"/>
 <repository location="http://download.eclipse.org/eclipse/updates/4.4"/>
 </location>

@@ -20,7 +20,6 @@ import org.eclipse.gmf.runtime.diagram.core.edithelpers.CreateElementRequestAdap
 import org.eclipse.gmf.runtime.diagram.ui.commands.CreateCommand;
 import org.eclipse.gmf.runtime.diagram.ui.commands.ICommandProxy;
 import org.eclipse.gmf.runtime.diagram.ui.commands.SemanticCreateCommand;
-import org.eclipse.gmf.runtime.diagram.ui.commands.SetBoundsCommand;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.DiagramDragDropEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.requests.CreateViewAndElementRequest.ViewAndElementDescriptor;
@@ -110,7 +109,7 @@ public class DragDropImportEditPolicy extends DiagramDragDropEditPolicy {
 		// relocate command
 		Point dropLocation = dropRequest.getLocation().getCopy();
 		getHostFigure().translateToRelative(dropLocation);
-		SetBoundsCommand relocateCommand = new SetBoundsCommand(editingDomain, "Set location", descriptor, dropLocation);
+		AdjustSizeAndPortsCommand relocateCommand = new AdjustSizeAndPortsCommand(editingDomain, "Set location", descriptor, dropLocation);
 
 		// compound command
 		CompositeCommand cc = new CompositeCommand(semanticCommand.getLabel());
